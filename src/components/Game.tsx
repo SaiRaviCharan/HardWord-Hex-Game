@@ -96,6 +96,20 @@ export default function Game({ wordLength }: GameProps) {
       return;
     }
 
+    // Check for adjacent double letters first
+    const hasDouble = (word: string) => {
+      for (let i = 1; i < word.length; i++) {
+        if (word[i] === word[i - 1]) return true;
+      }
+      return false;
+    };
+
+    if (hasDouble(upperGuess)) {
+      setMessage('No repeated adjacent letters allowed!');
+      setTimeout(() => setMessage(''), 2000);
+      return;
+    }
+
     if (!isValidWord(upperGuess, wordLength)) {
       setMessage('Not a valid word!');
       setTimeout(() => setMessage(''), 2000);

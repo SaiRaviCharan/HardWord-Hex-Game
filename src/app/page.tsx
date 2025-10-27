@@ -7,15 +7,15 @@ export default function Home() {
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState<4 | 5 | null>(null);
   const [showInstructions, setShowInstructions] = useState(false);
-  const [indianOnly, setIndianOnly] = useState(true);
+  const [indianOnly, setIndianOnly] = useState(false);
 
   useEffect(() => {
     try {
       const v = localStorage.getItem('hardword-hex-indian-only');
-      if (v === 'false') setIndianOnly(false);
-      else setIndianOnly(true);
+      if (v === 'true') setIndianOnly(true);
+      else setIndianOnly(false);
     } catch {
-      setIndianOnly(true);
+      setIndianOnly(false);
     }
   }, []);
 

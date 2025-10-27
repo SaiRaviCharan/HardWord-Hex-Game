@@ -72,16 +72,16 @@ const getIndianPool = (length: 4 | 5): string[] => {
 };
 
 const getActivePool = (length: 4 | 5): string[] => {
-  // Default to Indian-only mode for this build (the app is designed for Indian users).
-  // If localStorage explicitly sets 'hardword-hex-indian-only' to 'false', fall back to full pool.
+  // Check if user explicitly enabled Indian-only mode.
+  // By default, use the combined pool (English + Indian words) for better coverage.
   if (globalThis.window !== undefined) {
     try {
       const v = localStorage.getItem('hardword-hex-indian-only');
-      if (v === 'false') return combineWordPools(length);
-      // Any other value (null or 'true') -> Indian-only
-      return getIndianPool(length);
+      if (v === 'true') return getIndianPool(length);
+      // Default or 'false' -> use combined pool
+      return combineWordPools(length);
     } catch {
-      return getIndianPool(length);
+      return combineWordPools(length);
     }
   }
 
